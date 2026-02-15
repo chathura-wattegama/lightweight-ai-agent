@@ -1,7 +1,7 @@
 import requests
 import json
 
-# ==== SETUP ====
+# ==== CONFIG ====
 API_KEY = "YOUR_API_KEY_HERE"  # Replace with your OpenAI API key
 MODEL = "gpt-4o-mini"
 
@@ -28,21 +28,21 @@ while True:
     }
 
     try:
-    response = requests.post(
-        "https://api.openai.com/v1/chat/completions",
-        headers=headers,
-        data=json.dumps(data)
-    )
+        response = requests.post(
+            "https://api.openai.com/v1/chat/completions",
+            headers=headers,
+            data=json.dumps(data)
+        )
 
-    result = response.json()
+        result = response.json()
 
-    if "error" in result:
-        print("\nAgent Error:", result["error"]["message"], "\n")
-    elif "choices" in result:
-        reply = result["choices"][0]["message"]["content"]
-        print("\nAgent:", reply, "\n")
-    else:
-        print("\nAgent: No response received. Check API key or network.\n")
+        if "error" in result:
+            print("\nAgent Error:", result["error"]["message"], "\n")
+        elif "choices" in result and len(result["choices"]) > 0:
+            reply = result["choices"][0]["message"]["content"]
+            print("\nAgent:", reply, "\n")
+        else:
+            print("\nAgent: No response received. Check API key or network.\n")
 
-except Exception as e:
-    print("Request Exception:", e)
+    except Exception as e:
+        print("Request Exception:", e)
