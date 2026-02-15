@@ -1,9 +1,14 @@
 import requests
 import json
+import os
 
 # ==== CONFIG ====
-API_KEY = "YOUR_API_KEY_HERE"  # Replace with your OpenAI API key
+API_KEY = os.getenv("OPENAI_API_KEY")  # Must set in Termux shell
 MODEL = "gpt-4o-mini"
+
+if not API_KEY:
+    print("Error: OPENAI_API_KEY not found. Run 'export OPENAI_API_KEY=sk-XXXX' in Termux.")
+    exit(1)
 
 print("Lightweight AI Agent Started. Type 'exit' to quit.\n")
 
